@@ -2,6 +2,7 @@
 from PIL import Image
 im = Image.open ('topology.png')
 width, height = im.size
+print(width, height)
 
 # file output
 import csv
@@ -29,17 +30,17 @@ topologyData = [[209, 250, 254, -2.5], #format [R,G,B, pgh]
                 [64, 107, 53, 17.5],
                 [77, 95, 37, 20.0]] 
 
-for x in range (width):
-    for y in range (height):
-        R,G,B, A = im.getpixel ((x,y))
-        #conversion of x y pixel position to meters 
-        y_pos  = -float(y)/2 + 100
-        x_pos = float(x)/2.3 - 20
+for x in range (0, width, 2):
+    for y in range (0, height, 2):
+            R,G,B, A = im.getpixel ((x,y))
+            #conversion of x y pixel position to meters 
+            y_pos  = -float(y)/2 + 100
+            x_pos = float(x)/2 - 20
 
-        x_y_pgh [0]= round(x_pos, 0)
-        x_y_pgh [1]= y_pos
-        x_y_pgh [2] = match (R, topologyData) 
-        writer.writerow (x_y_pgh)
+            x_y_pgh [0]= x_pos
+            x_y_pgh [1]= y_pos
+            x_y_pgh [2] = match (R, topologyData) 
+            writer.writerow (x_y_pgh)
 
 file.close()
 
